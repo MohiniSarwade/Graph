@@ -13,13 +13,18 @@ void print(list<int>L[],int n)
         cout<<endl;
     }
 }
-void addEdge(list<int>L[],int i, int j)
+void addEdge(list<int>L[],int i, int j,int n)
 {
+    if(i>=n || j>=n)
+        return;
     L[i].push_back(j);
 }
-void removeEdge(list<int>L[],int i,int j)
+void removeEdge(list<int>L[],int i,int j,int n)
 {
     
+    if(i>=n || j>=n)
+        return;
+        
     list<int>::iterator it,it2;
     it2=L[i].begin();
     for(auto it=L[i].begin();it!=L[i].end();++it)
@@ -37,12 +42,13 @@ int main()
 {
     int n=4;
     list<int>L[n];
-    addEdge(L,0,1);
-    addEdge(L,2,1);
-    addEdge(L,0,3);
-    addEdge(L,2,3);
-    addEdge(L,2,0);
-    removeEdge(L,2,0);
+    addEdge(L,0,1,n);
+    addEdge(L,2,1,n);
+    addEdge(L,0,3,n);
+    addEdge(L,2,3,n);
+    addEdge(L,2,0,n);
+    addEdge(L,11,12,n);
+    removeEdge(L,2,0,n);
     print(L,n);
     return 0;
 }
