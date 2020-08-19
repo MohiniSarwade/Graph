@@ -9,50 +9,54 @@ struct Edge
 class Graph
 {
     int v,e;
+    int *p,*r;
     public:
     struct Edge *edge;
     Graph(int n,int t)
     {
         v=n;
         e=t;
+        p=new int[v];
+        r=new int[v];
         edge=new Edge[e];
     }
-    void union_s(int *s,int x, int y);
-    void makeset(int *s, int n);
-    int find(int *s, int i);
+    void union_s(int x, int y);
+    void makeset();
+    int find(int i);
     //int myComp(const void* a, const void* b);
     void Kruskal();
 };
 
-void Graph::makeset(int *s,int n)
+void Graph::makeset()
 {
-    for(int i=0;i<n;i++)
-        s[i]=-1;
+    for(int i=0;i<v;i++)
+    {
+        p[i]=i;
+        r[i]=0;
+    }
 }
-int Graph::find(int *s, int x)
+int Graph::find(int x)
 {
-    if(!(x>=0 && x<v))
-        return -1;
-    if(s[x]==-1)
-        return x;
-    else return(s[x]=find(s,s[x]));
+    while(x!=p[x])
+    {
+        x=p[x];
+    }
+    return x;
 }
-void Graph::union_s(int *s,int x, int y)
+void Graph::union_s(int x, int y)
 {
-    int t1=find(s,x);
-    int t2=find(s,y);
-    if(t2==t1 && t1!=-1)
+    int t1=find(x);
+    int t2=find(y);
+    if(t2==t1)
         return;
-    if(s[t2]<s[t1])
-    {
-        s[t2]+=s[t1];
-        s[t1]=t2;
-    }
-    else
-    {
-        s[t1]+=s[t2];
-        s[t2]=t1;
-    }
+        
+    if(r[t1]>r[t2])
+		p[t2]=t1;
+	else
+		p[t1]=t2;
+		
+	if(r[t1]==r[t2])
+		r[t2]=r[t2]+1;
 }
 int myComp(const void* a, const void* b)  
 {  
@@ -64,24 +68,24 @@ void Graph:: Kruskal()
 {
     vector<Edge>res;
     int cost=0;
-    int *s=new int[v];
-    makeset(s,v);
+   
+    makeset();
     qsort(edge,e,sizeof(edge[0]),myComp);
     
     for(int i=0;i<e;i++)
     {
-        if(find(s,edge[i].src)!=find(s,edge[i].dest))
+        if(find(edge[i].src)!=find(edge[i].dest))
         {
             cout<<edge[i].src<<"-->"<<edge[i].dest<<" "<<edge[i].w<<endl;
             cost+=edge[i].w;
-            union_s(s,edge[i].src,edge[i].dest);
+            union_s(edge[i].src,edge[i].dest);
         }
     }
     
     
         
         
-    cout<<"Cost of MST is"<<cost;
+    cout<<"Cost of MST is "<<cost;
 }
 
 int main()
