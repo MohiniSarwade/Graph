@@ -19,7 +19,7 @@ class Graph{
   bool isEulerianCycle();
   void DFS(int s, bool visit[]);
   Graph getTranspose();
-  bool kosaRaju();
+  bool isSC();
 };
 void Graph::addEdge(int i, int j)
 {
@@ -49,7 +49,7 @@ Graph Graph::getTranspose()
     return g;
 }
 
-bool Graph::kosaRaju()
+bool Graph::isSC()
 {
     bool visit[v];
   
@@ -91,7 +91,7 @@ bool Graph::kosaRaju()
 
 bool Graph::isEulerianCycle()
 {
-    if(kosaRaju()==false)
+    if(isSC()==false)
         return false;
     
     for(int i=0;i<v;i++)
