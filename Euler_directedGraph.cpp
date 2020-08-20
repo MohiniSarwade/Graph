@@ -42,7 +42,7 @@ Graph Graph::getTranspose()
         list<int>::iterator it;
         for(auto it=l[i].begin();it!=l[i].end();++it)
         {
-            l[*it].push_back(i);
+            g.l[*it].push_back(i);
             in[i]++;
         }
     }
