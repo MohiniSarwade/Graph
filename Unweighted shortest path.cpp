@@ -19,6 +19,7 @@ class Graph
 void Graph::addEdge(int i,int j)
 {
     l[i].push_back(j);
+    l[j].push_back(i);   
 }
 
 void Graph::unweightedShortestPath(int s)
